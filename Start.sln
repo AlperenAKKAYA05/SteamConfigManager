@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamConfigManager", "SteamConfigManager\SteamConfigManager\SteamConfigManager.csproj", "{5A2D5A6B-0BAB-4931-8C34-37D7A8DD3C81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFetchSteam.API", "UserFetchSteam.API\UserFetchSteam.API\UserFetchSteam.API.csproj", "{1F86BD3A-7DAF-46BE-81B1-8B1F97B1C2BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A2D5A6B-0BAB-4931-8C34-37D7A8DD3C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A2D5A6B-0BAB-4931-8C34-37D7A8DD3C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A2D5A6B-0BAB-4931-8C34-37D7A8DD3C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A2D5A6B-0BAB-4931-8C34-37D7A8DD3C81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F86BD3A-7DAF-46BE-81B1-8B1F97B1C2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F86BD3A-7DAF-46BE-81B1-8B1F97B1C2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F86BD3A-7DAF-46BE-81B1-8B1F97B1C2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F86BD3A-7DAF-46BE-81B1-8B1F97B1C2BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BFD7942-5623-4BDF-9D66-521AF8718B8F}
+	EndGlobalSection
+EndGlobal
