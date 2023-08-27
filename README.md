@@ -1,4 +1,4 @@
-# Steam Privacy-Focused User Data Management Application
+# Steam Config Manager
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/AlperenAKKAYA05/SteamConfigManager/master/SteamConfigManager/SteamConfigManager/media/icon.png" alt="Project Logo" width="125" height="125">
@@ -18,7 +18,7 @@ This project introduces an application aimed at preserving the privacy and data 
 
 ## Usage
 
-1. **Download:** Download the Steam Config Manager.rar file [here](link_to_download).
+1. **Download:** Download the Steam Config Manager.rar file [here](https://github.com/AlperenAKKAYA05/SteamConfigManager/releases/download/0.1/SteamConfigManager.rar).
 
 2. **Extraction:** Extract the downloaded RAR file.
 
