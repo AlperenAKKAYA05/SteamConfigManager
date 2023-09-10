@@ -11,13 +11,13 @@ using System.Collections.Generic;
 
 namespace SteamConfigManager
 {
-    public partial class mainForm : Form
+    public partial class SteamInfo : Form
     {
         private readonly Client _steamClient = new Client(); // Create a Steam client instance.
         private string[] errorArray = new string[] { }; // Array to store errors.
         private static string userid; // Static variable to store the user's Steam ID.
 
-        public mainForm()
+        public SteamInfo()
         {
             this.Hide(); // Hide the form initially.
             InitializeComponent(); // Initialize the main form components.
@@ -26,11 +26,6 @@ namespace SteamConfigManager
         private void MainForm_Load(object sender, EventArgs e)
         {
             ConnectToSteamClient(); // Connect to the Steam client.
-
-            // Mark warning displayed, save settings, then mark warning not displayed.
-            Properties.Settings.Default.warningdisplayed = true;
-            Properties.Settings.Default.Save();
-            Properties.Settings.Default.warningdisplayed = false;
 
             steamid.Text = ""; // Clear the Steam ID text.
             userid = FetchAccountID(); // Fetch the user's Steam ID.
@@ -110,8 +105,6 @@ namespace SteamConfigManager
             {
                 this.Hide();
                 string enteredText = lblStatus.Text;
-                PopUp secondForm = new PopUp(enteredText);
-                secondForm.ShowDialog();
                 Application.Exit();
             }
         }

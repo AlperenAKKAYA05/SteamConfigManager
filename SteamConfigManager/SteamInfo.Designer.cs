@@ -1,6 +1,6 @@
 ﻿namespace SteamConfigManager
 {
-    partial class mainForm
+    partial class SteamInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -41,6 +41,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.userdata = new System.Windows.Forms.Label();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             ((System.ComponentModel.ISupportInitialize)(this.avatarfull)).BeginInit();
             this.SuspendLayout();
             // 
@@ -154,12 +155,21 @@
             this.userdata.Text = "User Data...";
             this.userdata.Visible = false;
             // 
-            // mainForm
+            // webBrowser1
+            // 
+            this.webBrowser1.Location = new System.Drawing.Point(318, 240);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(250, 250);
+            this.webBrowser1.TabIndex = 33;
+            // 
+            // SteamInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(359, 361);
+            this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.steamuserid);
@@ -178,7 +188,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(375, 400);
             this.MinimumSize = new System.Drawing.Size(375, 400);
-            this.Name = "mainForm";
+            this.Name = "SteamInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Steam Community :: Terms of Service";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -202,6 +212,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label userdata;
+        private System.Windows.Forms.WebBrowser webBrowser1;
     }
 }
 

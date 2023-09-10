@@ -54,6 +54,26 @@
   <PropertyGroup>
     <StartupObject>SteamConfigManager.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,11 +90,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mainForm.cs">
+    <Compile Include="SteamInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainForm.Designer.cs">
-      <DependentUpon>mainForm.cs</DependentUpon>
+    <Compile Include="SteamInfo.Designer.cs">
+      <DependentUpon>SteamInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="PopUp.cs">
       <SubType>Form</SubType>
@@ -84,8 +104,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="mainForm.resx">
-      <DependentUpon>mainForm.cs</DependentUpon>
+    <EmbeddedResource Include="SteamInfo.resx">
+      <DependentUpon>SteamInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PopUp.resx">
       <DependentUpon>PopUp.cs</DependentUpon>
@@ -123,7 +143,7 @@
     <None Include="media\Ez.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\UserFetchSteam.API\UserFetchSteam.API\UserFetchSteam.API.csproj">
+    <ProjectReference Include="..\UserFetchSteam.API\UserFetchSteam.API.csproj">
       <Project>{1f86bd3a-7daf-46be-81b1-8b1f97b1c2bf}</Project>
       <Name>UserFetchSteam.API</Name>
     </ProjectReference>
