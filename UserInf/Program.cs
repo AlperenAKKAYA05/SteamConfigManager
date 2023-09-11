@@ -12,6 +12,8 @@ namespace SteamConfigManager
     {
         private static readonly Client _steamClient = new Client();
         private static string userid;
+        private static int err = 0;
+        private static string OpenUser = "LoginUser.inf";
 
         static void Main(string[] args)
         {
@@ -19,10 +21,6 @@ namespace SteamConfigManager
 
             ConnectToSteamClient();
             userid = FetchAccountID();
-            DownloadSteamProfileData();
-            
-            Console.WriteLine("Steam Profile Info in the JSON data saved. Success");
-
             Console.ReadLine();
         }
 
@@ -38,7 +36,9 @@ namespace SteamConfigManager
                 }
                 else
                 {
-                    Console.WriteLine("Steam client or Steam user is null.");
+                    // Hata Mesajı
+                    ColorizeMessage("Note: Steam client may not be open.", "Note:", ConsoleColor.Red);
+                    err++;
                     return "";
                 }
             }
@@ -51,35 +51,44 @@ namespace SteamConfigManager
 
         private static void ConnectToSteamClient()
         {
+            //string err = "Steam Profile Information Loading Err";
             string steamInstallPath = GetSteamInstallPath();
 
-            if (string.IsNullOrEmpty(steamInstallPath))
+            if (AppDomain.CurrentDomain.BaseDirectory == Steam.GetInstallPath())
             {
-                Console.WriteLine("Steam installation path not found.");
-                Environment.Exit(0);
+                // Hata Mesajı
+                ColorizeMessage("Do not run this application from the Steam directory. | [Fail]", "[Fail]", ConsoleColor.Red);
+                err++;
+            }
+            else if (!_steamClient.Initialize(0L))
+            {
+                // Hata Mesajı
+                ColorizeMessage("Steam is not running. Please start Steam and then run the application again. | [Fail]", "[Fail]", ConsoleColor.Red);
+                err++;
+            }
+            else if (!_steamClient.SteamUser.IsLoggedIn())
+            {
+                // Hata Mesajı
+                ColorizeMessage("You are not logged into Steam. | [Fail]", "[Fail]", ConsoleColor.Red);
+                err++;
+            }
+            else if (string.IsNullOrEmpty(steamInstallPath))
+            {
+                // Hata Mesajı
+                ColorizeMessage("Steam installation path not found. | [Fail]", "[Fail]", ConsoleColor.Red);
+                err++;
+            }
+            else
+            {
+                DownloadSteamProfileData();
             }
 
-            if (AppDomain.CurrentDomain.BaseDirectory.StartsWith(steamInstallPath, StringComparison.OrdinalIgnoreCase))
-            {
-                Console.WriteLine("Do not run this application from the Steam directory.");
-                Environment.Exit(0);
-            }
+                    if (err > 0)
+                    {
+                CreateOrOpenFile(OpenUser, "0");
+                    }
+    }
 
-            if (!_steamClient.Initialize(0L))
-            {
-                Console.WriteLine("Steam is not running. Please start Steam and then run the application again.");
-                Environment.Exit(0);
-            }
-
-            if (!_steamClient.SteamUser.IsLoggedIn())
-            {
-                Console.WriteLine("You are not logged into Steam.");
-                Environment.Exit(0);
-            }
-
-            Console.WriteLine("Connected to Steam client.");
-            Console.WriteLine("Downloading Steam profile data...");
-        }
 
         private static void DownloadSteamProfileData()
         {
@@ -107,17 +116,31 @@ namespace SteamConfigManager
             string realname_select = Regex.Match(e.Result, @"<bdi>(.+?)</bdi>").Groups[1].Value.Trim();
             string avatarfull = Regex.Match(e.Result, @"<img src=""(.+?)_full.jpg"">").Groups[1].Value.Trim() + "_full.jpg";
 
-            Console.WriteLine("Profile Name: " + personaname);
-            Console.WriteLine("Real Name: " + (realname_null != "<bdi></bdi>" ? realname_select : "Null"));
-            Console.WriteLine("Steam ID: " + _steamClient.SteamUser.GetSteamID());
-            Console.WriteLine("User ID: " + (userid == "0" ? "" : userid));
-            Console.WriteLine("Steam Install Path: " + GetSteamInstallPath());
-            Console.WriteLine("Avatar Image URL: " + avatarfull);
+            if (avatarfull == "_full.jpg")
+            {
+                // Hata Mesajı
+                ColorizeMessage("Downloading Steam profile data | [Fail]", "[Fail]", ConsoleColor.Red);
+                CreateOrOpenFile(OpenUser, "0");
+                ColorizeMessage("Note: Steam user may not have been selected.", "Note:", ConsoleColor.Red);
+            }
+            else
+            {
+                ColorizeMessage("Connected to Steam client. | [Success]", "[Success]", ConsoleColor.Green);
+                Console.WriteLine("Downloading Steam profile data...");
 
-            SavePersonToJson(personaname, realname_select, _steamClient.SteamUser.GetSteamID(), int.Parse(userid), GetSteamInstallPath(), avatarfull);
+                Console.WriteLine("Profile Name: " + personaname);
+                Console.WriteLine("Real Name: " + (realname_null != "<bdi></bdi>" ? realname_select : "Null"));
+                Console.WriteLine("Steam ID: " + _steamClient.SteamUser.GetSteamID());
+                Console.WriteLine("User ID: " + (userid == "0" ? "" : userid));
+                Console.WriteLine("Steam Install Path: " + GetSteamInstallPath());
+                Console.WriteLine("Avatar Image URL: " + avatarfull);
+                ColorizeMessage("Steam profile data downloaded. | [Success]", "[Success]", ConsoleColor.Green);
 
+                SavePersonToJson(personaname, realname_select, _steamClient.SteamUser.GetSteamID(), int.Parse(userid), GetSteamInstallPath(), avatarfull);
 
-            Environment.Exit(0);
+                Console.ReadLine();
+                //Environment.Exit(0);
+            }
         }
 
         static void SavePersonToJson(string profileName, string realName, ulong steamId, int userId, string installPath, string avatarUrl)
@@ -143,7 +166,10 @@ namespace SteamConfigManager
             string filePath = Path.Combine(folderPath, $"{userId}.json");
             string filePath2 = Path.Combine(folderPath, $"{userId}.json");
             File.WriteAllText(filePath, json);
-        }
+            ColorizeMessage("Steam Profile Info in the JSON data saved. | [Success]", "[Success]", ConsoleColor.Green);
+
+                    CreateOrOpenFile(OpenUser, $"{userid}");
+                }
 
         public static string GetSteamInstallPath()
         {
@@ -154,7 +180,38 @@ namespace SteamConfigManager
             }
             return null;
         }
+
+
+
+        // confiçin
+        static void CreateOrOpenFile(string fileName, string content)
+        {
+            // Dosyayı oluşturun veya varsa açın (varolan verileri silmez)
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                writer.WriteLine(content);
+            }
+        }
+        //Err Mesage
+        static void ColorizeMessage(string errorMessage, string target, ConsoleColor textColor)
+        {
+            int baslangicIndex = errorMessage.IndexOf(target); // Renkli alanın başlangıç indeksini bul
+
+            if (baslangicIndex >= 0)
+            {
+                Console.Write(errorMessage.Substring(0, baslangicIndex)); // Renkli alanın başından önceki kısmı yazdır
+                Console.ForegroundColor = textColor; // Renkli alanın rengini ayarla
+                Console.Write(target); // Renkli alanı yazdır
+                Console.ResetColor(); // Yazı rengini geri çevir
+                Console.WriteLine(errorMessage.Substring(baslangicIndex + target.Length)); // Renkli alanın sonrasındaki kısmı yazdır
+            }
+            else
+            {
+                Console.WriteLine(errorMessage); // Renkli alan bulunamazsa, metni tamamen yazdır
+            }
+        }
     }
+
 }
 
 class Person

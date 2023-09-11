@@ -25,6 +25,13 @@ namespace SteamConfigManager
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            string iconPath = "icon.ico";
+
+            if (System.IO.File.Exists(iconPath))
+            {
+                this.Icon = new Icon(iconPath);
+            }
+
             ConnectToSteamClient(); // Connect to the Steam client.
 
             steamid.Text = ""; // Clear the Steam ID text.
