@@ -1,7 +1,7 @@
 # Steam Config Manager
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/AlperenAKKAYA05/SteamConfigManager/master/SteamConfigManager/img/icon.png" alt="Project Logo" width="125" height="125">
+  <img id="projectLogo" src="https://raw.githubusercontent.com/AlperenAKKAYA05/SteamConfigManager/master/SteamConfigManager/img/icon.png" alt="Project Logo" width="125" height="125" onclick="return false;">
 </p>
 
 This project introduces an application aimed at preserving the privacy and data security of Steam users. Our goal is to enable users to securely manage and control their data while prioritizing user consent and security.
